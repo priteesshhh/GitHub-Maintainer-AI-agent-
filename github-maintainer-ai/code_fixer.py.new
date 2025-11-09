@@ -1,0 +1,204 @@
+#!/usr/bin/env python3
+
+from typing import List, Optional
+import ast
+import re
+from github import Repository, Issue
+from loguru import logger
+from issue_analyzer import CodeFix
+
+class FixAnalysis:
+    def __init__(self):
+        self.changes: List[str] = []
+        self.testing_steps: List[str] = []
+        self.considerations: List[str] = []
+        self.potential_impacts: List[str] = []
+
+class CodeFixer:
+    def __init__(self, repo: Repository):
+        self.repo = repo
+        self._current_analysis = None
+    
+    def get_analysis(self) -> Optional[FixAnalysis]:
+        """Returns the analysis from the last fix generation."""
+        return self._current_analysis
+    
+    def generate_fix(self, issue: Issue, affected_files: List[str]) -> Optional[List[CodeFix]]:
+        """Generates fixes for the affected files based on the issue description."""
+        fixes = []
+        
+        for file_path in affected_files:
+            try:
+                # Get the file content
+                file_content = self.repo.get_contents(file_path)
+                
+                # Log file details
+                logger.info(f"Analyzing file: {file_path}")
+                logger.info(f"File size: {file_content.size} bytes")
+                logger.info(f"File encoding: {file_content.encoding}")
+                
+                # Get raw content
+                raw_content = file_content.decoded_content
+                content = None
+                
+                # Try to decode with different encodings
+                for encoding in ['utf-8', 'utf-16', 'latin1', 'ascii']:
+                    try:
+                        content = raw_content.decode(encoding)
+                        logger.info(f"Successfully decoded with {encoding}")
+                        break
+                    except UnicodeDecodeError:
+                        logger.warning(f"Failed to decode with {encoding}")
+                        continue
+                
+                if content is None:
+                    logger.error(f"Could not decode {file_path} with any known encoding")
+                    continue
+                
+                # Log a sample of the content
+                preview = content[:200]
+                if len(content) > 200:
+                    preview += '...'
+                logger.info(f"Content preview:\n{preview}")
+                
+                # Initialize analysis for this file
+                analysis = FixAnalysis()
+                self._current_analysis = analysis
+                
+                # Analyze the issue and content to determine the fix
+                fix = self._analyze_and_fix(issue, file_path, content)
+                if fix:
+                    fixes.append(fix)
+                    
+            except Exception as e:
+                logger.error(f"Error processing file {file_path}: {str(e)}")
+                continue
+        
+        return fixes if fixes else None
+    
+    def _analyze_and_fix(self, issue: Issue, file_path: str, content: str) -> Optional[CodeFix]:
+        """Analyzes the code and generates a fix based on the issue description."""
+        try:
+            # Extract key information from the issue
+            title = issue.title.lower()
+            body = (issue.body or "").lower()
+            
+            # Look for specific patterns that indicate what needs to be fixed
+            if "speed" in title or "speed" in body or "mph" in title or "mph" in body:
+                return self._analyze_speed_calculation(content)
+            elif "error handling" in title or "exception" in body:
+                return self._fix_error_handling(content)
+            # Add more patterns as needed
+            
+            return None
+            
+        except Exception as e:
+            logger.error(f"Error in fix analysis: {str(e)}")
+            return None
+    
+    def _analyze_speed_calculation(self, content: str) -> Optional[CodeFix]:
+        """Analyzes and fixes speed calculations in code."""
+        try:
+            # Search for speed-related code sections
+            speed_patterns = [
+                r'speed\s*=\s*0',
+                r'speed\s*==\s*0',
+                r'speed\s*<=\s*0',
+                r'mph\s*=\s*0',
+                r'velocity\s*=\s*0'
+            ]
+            
+            # Find all matches with context
+            matches = []
+            lines = content.split('\n')
+            for i, line in enumerate(lines):
+                for pattern in speed_patterns:
+                    if re.search(pattern, line, re.IGNORECASE):
+                        # Get context (5 lines before and after)
+                        start = max(0, i - 5)
+                        end = min(len(lines), i + 6)
+                        context = '\n'.join(lines[start:end])
+                        matches.append((i, context))
+            
+            # If we found any matches, create a fix
+            if matches:
+                # Sort by line number to get the first occurrence
+                matches.sort(key=lambda x: x[0])
+                _, context = matches[0]
+                
+                # Generate improved code
+                improved_code = self._generate_improved_speed_calc(context)
+                if improved_code and improved_code != context:
+                    if self._current_analysis:
+                        self._current_analysis.changes.append("Enhanced speed calculation logic")
+                        self._current_analysis.testing_steps.extend([
+                            "Test with speed = 0",
+                            "Test with very low speeds (near 0)",
+                            "Test with negative speeds",
+                            "Verify display format"
+                        ])
+                        self._current_analysis.considerations.extend([
+                            "Added proper validation for zero and near-zero speeds",
+                            "Improved display formatting",
+                            "Added logging for debugging"
+                        ])
+                        self._current_analysis.potential_impacts.extend([
+                            "May affect speed-dependent calculations",
+                            "Changes how zero speed is displayed",
+                            "Increases logging output"
+                        ])
+                    
+                    return CodeFix(
+                        file_path="",  # Will be set by caller
+                        old_code=context,
+                        new_code=improved_code,
+                        description="Enhanced speed handling with proper zero-speed validation"
+                    )
+            
+            return None
+            
+        except Exception as e:
+            logger.error(f"Error in speed calculation analysis: {str(e)}")
+            return None
+    
+    def _generate_improved_speed_calc(self, context: str) -> str:
+        """Generates improved speed calculation code."""
+        try:
+            # Determine if this is C# code
+            is_csharp = "using System" in context or "public" in context
+            
+            if is_csharp:
+                # C# version
+                return '''// Check if vehicle is effectively stopped
+if (Math.Abs(speed) <= 0.01f)
+{
+    speed = 0f;  // Explicitly set to zero
+    status = VehicleStatus.Stopped;
+    _displayedSpeed = "Stopped";  // Human-readable status
+    Logger.LogDebug("Vehicle speed below threshold, marked as stopped");
+}
+else
+{
+    _displayedSpeed = $"{speed:F1} MPH";  // One decimal place for non-zero speeds
+    Logger.LogDebug($"Vehicle speed updated to {_displayedSpeed}");
+}'''
+            else:
+                # Python version
+                return '''# Check if vehicle is effectively stopped
+if abs(speed) <= 0.01:
+    speed = 0.0  # Explicitly set to zero
+    status = VehicleStatus.STOPPED
+    displayed_speed = "Stopped"  # Human-readable status
+    logger.debug("Vehicle speed below threshold, marked as stopped")
+else:
+    displayed_speed = f"{speed:.1f} MPH"  # One decimal place for non-zero speeds
+    logger.debug(f"Vehicle speed updated to {displayed_speed}")'''
+                
+        except Exception as e:
+            logger.error(f"Error generating improved code: {str(e)}")
+            return context  # Return original code if we can't improve it
+    
+    def _fix_error_handling(self, content: str) -> Optional[CodeFix]:
+        """Generates a fix for error handling issues."""
+        # To be implemented
+        return None

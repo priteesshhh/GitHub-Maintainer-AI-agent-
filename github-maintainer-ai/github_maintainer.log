@@ -1,0 +1,54 @@
+2025-11-08 16:22:54.798 | INFO     | __main__:main:13 - Starting GitHub Maintainer AI agent
+2025-11-08 16:26:00.485 | INFO     | __main__:main:13 - Starting GitHub Maintainer AI agent
+2025-11-08 16:31:03.510 | INFO     | __main__:main:13 - Starting GitHub Maintainer AI agent
+2025-11-08 16:34:10.968 | INFO     | __main__:main:13 - Starting GitHub Maintainer AI agent
+2025-11-08 16:34:12.013 | INFO     | __main__:main:27 - Scanning for open issues...
+2025-11-08 16:34:12.157 | INFO     | __main__:main:31 - No open issues found to process
+2025-11-08 16:38:32.925 | INFO     | __main__:main:13 - Starting GitHub Maintainer AI agent
+2025-11-08 16:38:34.237 | INFO     | __main__:main:27 - Scanning for open issues...
+2025-11-08 16:38:34.394 | INFO     | __main__:main:31 - No open issues found to process
+2025-11-08 16:39:05.832 | INFO     | __main__:main:13 - Starting GitHub Maintainer AI agent
+2025-11-08 16:39:05.833 | INFO     | core.github_client:_get_repository:19 - Accessing repository: priteesshhh/GitHub-Maintainer-AI-agent-
+2025-11-08 16:39:06.096 | INFO     | core.github_client:_get_repository:19 - Accessing repository: priteesshhh/GitHub-Maintainer-AI-agent-
+2025-11-08 16:39:06.342 | INFO     | core.github_client:_get_repository:19 - Accessing repository: priteesshhh/GitHub-Maintainer-AI-agent-
+2025-11-08 16:39:06.588 | INFO     | core.github_client:_get_repository:19 - Accessing repository: priteesshhh/GitHub-Maintainer-AI-agent-
+2025-11-08 16:39:06.844 | INFO     | __main__:main:27 - Scanning for open issues...
+2025-11-08 16:39:06.844 | INFO     | core.github_client:get_open_issues:25 - Fetching open issues...
+2025-11-08 16:39:06.988 | INFO     | core.github_client:get_open_issues:28 - Found 0 open issues
+2025-11-08 16:39:06.988 | INFO     | __main__:main:31 - No open issues found to process
+2025-11-08 16:41:31.967 | INFO     | __main__:main:13 - Starting GitHub Maintainer AI agent
+2025-11-08 16:41:31.967 | INFO     | core.github_client:_get_repository:19 - Accessing repository: priteesshhh/github_maintainer-ai
+2025-11-08 16:41:50.112 | INFO     | __main__:main:13 - Starting GitHub Maintainer AI agent
+2025-11-08 16:41:50.113 | INFO     | core.github_client:_get_repository:19 - Accessing repository: priteesshhh/GitHub-Maintainer-AI-agent-
+2025-11-08 16:41:50.397 | INFO     | core.github_client:_get_repository:19 - Accessing repository: priteesshhh/GitHub-Maintainer-AI-agent-
+2025-11-08 16:41:50.675 | INFO     | core.github_client:_get_repository:19 - Accessing repository: priteesshhh/GitHub-Maintainer-AI-agent-
+2025-11-08 16:41:50.946 | INFO     | core.github_client:_get_repository:19 - Accessing repository: priteesshhh/GitHub-Maintainer-AI-agent-
+2025-11-08 16:41:51.249 | INFO     | __main__:main:27 - Scanning for open issues...
+2025-11-08 16:41:51.249 | INFO     | core.github_client:get_open_issues:25 - Fetching open issues...
+2025-11-08 16:41:51.479 | INFO     | core.github_client:get_open_issues:28 - Found 1 open issues
+2025-11-08 16:41:51.479 | INFO     | __main__:main:35 - Analyzing issue #1: Update ReadMe
+2025-11-08 16:45:02.225 | INFO     | __main__:main:23 - Starting GitHub Maintainer AI agent
+2025-11-08 16:45:02.226 | INFO     | core.github_client:_get_repository:26 - Accessing repository from URL: priteesshhh/GitHub-Maintainer-AI-agent-
+2025-11-08 16:45:02.495 | INFO     | core.github_client:_get_repository:35 - Accessing repository from env: priteesshhh/GitHub-Maintainer-AI-agent-
+2025-11-08 16:45:02.752 | INFO     | core.github_client:_get_repository:35 - Accessing repository from env: priteesshhh/GitHub-Maintainer-AI-agent-
+2025-11-08 16:45:02.991 | INFO     | core.github_client:_get_repository:35 - Accessing repository from env: priteesshhh/GitHub-Maintainer-AI-agent-
+2025-11-08 16:45:03.235 | INFO     | __main__:main:37 - Scanning for open issues...
+2025-11-08 16:45:03.235 | INFO     | core.github_client:get_open_issues:41 - Fetching open issues...
+2025-11-08 16:45:03.405 | INFO     | core.github_client:get_open_issues:44 - Found 1 open issues
+2025-11-08 16:45:03.405 | INFO     | __main__:main:45 - Analyzing issue #1: Update ReadMe
+2025-11-08 16:46:54.682 | INFO     | __main__:main:69 - Starting GitHub Maintainer AI agent
+2025-11-08 16:46:54.682 | INFO     | __main__:main:75 - Configuration:
+2025-11-08 16:46:54.682 | INFO     | __main__:main:79 - - Repository: priteesshhh/GitHub-Maintainer-AI-agent-
+2025-11-08 16:46:54.682 | INFO     | __main__:main:80 - - Branch: main
+2025-11-08 16:46:54.682 | INFO     | __main__:main:82 - - Labels: ['enhancement']
+2025-11-08 16:46:54.682 | INFO     | __main__:main:83 - - Max issues: 10
+2025-11-08 16:46:54.683 | ERROR    | core.github_client:_get_repository:29 - Error parsing repository URL: 'dict' object has no attribute 'endswith'
+2025-11-08 16:47:20.189 | INFO     | __main__:main:69 - Starting GitHub Maintainer AI agent
+2025-11-08 16:47:20.189 | INFO     | __main__:main:75 - Configuration:
+2025-11-08 16:47:20.190 | INFO     | __main__:main:79 - - Repository: priteesshhh/GitHub-Maintainer-AI-agent-
+2025-11-08 16:47:20.190 | INFO     | __main__:main:80 - - Branch: main
+2025-11-08 16:47:20.190 | INFO     | __main__:main:82 - - Labels: ['enhancement']
+2025-11-08 16:47:20.190 | INFO     | __main__:main:83 - - Max issues: 10
+2025-11-08 16:47:20.190 | INFO     | core.github_client:_get_repository:40 - Accessing repository: priteesshhh/GitHub-Maintainer-AI-agent-
+2025-11-08 16:47:20.487 | INFO     | core.github_client:_get_repository:40 - Accessing repository: priteesshhh/GitHub-Maintainer-AI-agent-
+2025-11-08 16:47:20.735 | INFO     | core.github_client:_get_repository:40 - Accessing repository: priteesshhh/GitHub-Maintainer-AI-agent-
